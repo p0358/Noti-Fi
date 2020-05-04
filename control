@@ -1,0 +1,9 @@
+Package: com.rpgfarm.noti-fi
+Name: Noti-Fi
+Depends: mobilesubstrate, firmware (>=11)
+Version: 1.0.1
+Architecture: iphoneos-arm
+Description: Android WiFi connection notification
+Maintainer: Baw Appie <pp121324@gmail.com>
+Author: Baw Appie <pp121324@gmail.com>
+Section: Tweaks
