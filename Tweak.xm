@@ -3,13 +3,12 @@
 %hook SpringBoard
 - (void)applicationDidFinishLaunching:(id)application {
 	%orig;
-  NFWindow *window = [NFWindow sharedInstance];
-  [window makeKeyAndVisible];
+	NFWindow *window = [NFWindow sharedInstance];
+	[window makeKeyAndVisible];
 
 	[[%c(NSDistributedNotificationCenter) defaultCenter] addObserverForName:@"com.rpgfarm.notifi" object:nil queue:nil usingBlock:^(NSNotification *notification) {
 		[window showToast:notification.userInfo[@"msg"]];
 	}];
-
 }
 %end
 

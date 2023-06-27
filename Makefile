@@ -1,8 +1,7 @@
-ARCHS = arm64 armv7
-OS := $(shell uname)
-ifeq ($(OS),Darwin)
-  ARCHS += arm64e
-endif
+TARGET = iphone:12.2:12.2
+ARCHS = arm64 arm64e
+PREFIX="/Library/Developer/TheosToolchains/Xcode11.xctoolchain/usr/bin/"
+
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = NotiFi
