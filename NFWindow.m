@@ -9,7 +9,7 @@
   	[self setHidden:NO];
     [self setWindowLevel:UIWindowLevelAlert];
   	[self setBackgroundColor:[UIColor clearColor]];
-  	[self setUserInteractionEnabled:YES];
+  	[self setUserInteractionEnabled:NO];
   	[CSToastManager setQueueEnabled:YES];
   }
   return self;

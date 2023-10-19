@@ -21,8 +21,8 @@
 	%orig;
 	NSString *msg = @"";
 
-	if(arg1) msg = [NSString stringWithFormat:@"Connected to WiFi Network %@.", [self currentNetworkName]];
-	else msg = @"Disconnected from WiFi Network.";
+	if(arg1) msg = [NSString stringWithFormat:@"Connected to Wi-Fi network %@", [self currentNetworkName]];
+	else msg = @"Disconnected from Wi-Fi network";
 
 	[[%c(NSDistributedNotificationCenter) defaultCenter] postNotificationName:@"com.rpgfarm.notifi" object:nil userInfo:@{
 		@"msg": msg

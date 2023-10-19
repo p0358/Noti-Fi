@@ -397,7 +397,12 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         activityView.layer.shadowOffset = style.shadowOffset;
     }
 
-    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    UIActivityIndicatorViewStyle activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    if (@available(iOS 13, *)) activityIndicatorViewStyle = UIActivityIndicatorViewStyleLarge;
+#pragma clang diagnostic pop
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:activityIndicatorViewStyle];
     activityIndicatorView.center = CGPointMake(activityView.bounds.size.width / 2, activityView.bounds.size.height / 2);
     [activityView addSubview:activityIndicatorView];
     [activityIndicatorView startAnimating];
@@ -436,9 +441,9 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     CSToastStyle *style = [CSToastManager sharedStyle];
 
     UIEdgeInsets safeInsets = UIEdgeInsetsZero;
-    // if (@available(iOS 11.0, *)) {
+    if (@available(iOS 11, *)) {
         safeInsets = self.safeAreaInsets;
-    // }
+    }
 
     CGFloat topPadding = style.verticalPadding + safeInsets.top;
     CGFloat bottomPadding = style.verticalPadding + safeInsets.bottom;
@@ -533,7 +538,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     self = [super init];
     if (self) {
         self.sharedStyle = [[CSToastStyle alloc] initWithDefaultStyle];
-        self.tapToDismissEnabled = YES;
+        self.tapToDismissEnabled = NO;
         self.queueEnabled = NO;
         self.defaultDuration = 3.0;
         self.defaultPosition = CSToastPositionBottom;
