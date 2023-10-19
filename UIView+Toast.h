@@ -49,7 +49,7 @@ extern const NSString * CSToastPositionBottom;
  
  @param message The message to be displayed
  */
-- (void)makeToast:(NSString *)message;
+- (void)makeToast:(NSAttributedString *)message;
 
 /**
  Creates and presents a new toast view with a message. Duration and position
@@ -60,7 +60,7 @@ extern const NSString * CSToastPositionBottom;
  @param position The toast's center point. Can be one of the predefined CSToastPosition
                  constants or a `CGPoint` wrapped in an `NSValue` object.
  */
-- (void)makeToast:(NSString *)message
+- (void)makeToast:(NSAttributedString *)message
          duration:(NSTimeInterval)duration
          position:(id)position;
 
@@ -74,7 +74,7 @@ extern const NSString * CSToastPositionBottom;
  constants or a `CGPoint` wrapped in an `NSValue` object.
  @param style The style. The shared style will be used when nil
  */
-- (void)makeToast:(NSString *)message
+- (void)makeToast:(NSAttributedString *)message
          duration:(NSTimeInterval)duration
          position:(id)position
             style:(CSToastStyle *)style;
@@ -95,10 +95,10 @@ extern const NSString * CSToastPositionBottom;
  @param completion The completion block, executed after the toast view disappears.
                    didTap will be `YES` if the toast view was dismissed from a tap.
  */
-- (void)makeToast:(NSString *)message
+- (void)makeToast:(NSAttributedString *)message
          duration:(NSTimeInterval)duration
          position:(id)position
-            title:(NSString *)title
+            title:(NSAttributedString *)title
             image:(UIImage *)image
             style:(CSToastStyle *)style
        completion:(void(^)(BOOL didTap))completion;
@@ -117,8 +117,8 @@ extern const NSString * CSToastPositionBottom;
  @param style The style. The shared style will be used when nil
  @return The newly created toast view
  */
-- (UIView *)toastViewForMessage:(NSString *)message
-                          title:(NSString *)title
+- (UIView *)toastViewForMessage:(NSAttributedString *)message
+                          title:(NSAttributedString *)title
                           image:(UIImage *)image
                           style:(CSToastStyle *)style;
 

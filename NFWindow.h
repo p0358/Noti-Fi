@@ -3,5 +3,5 @@
 @interface NFWindow : UIWindow
 + (instancetype)sharedInstance;
 - (id)init;
--(void)showToast:(NSString *)text;
+-(void)showToast:(NSAttributedString *)text;
 @end

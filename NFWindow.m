@@ -20,7 +20,7 @@
     return;
 }
 
--(void)showToast:(NSString *)text {
+-(void)showToast:(NSAttributedString *)text {
   [self makeToast:text];
 }
 

@@ -69,20 +69,20 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 
 #pragma mark - Make Toast Methods
 
-- (void)makeToast:(NSString *)message {
+- (void)makeToast:(NSAttributedString *)message {
     [self makeToast:message duration:[CSToastManager defaultDuration] position:[CSToastManager defaultPosition] style:nil];
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
+- (void)makeToast:(NSAttributedString *)message duration:(NSTimeInterval)duration position:(id)position {
     [self makeToast:message duration:duration position:position style:nil];
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position style:(CSToastStyle *)style {
+- (void)makeToast:(NSAttributedString *)message duration:(NSTimeInterval)duration position:(id)position style:(CSToastStyle *)style {
     UIView *toast = [self toastViewForMessage:message title:nil image:nil style:style];
     [self showToast:toast duration:duration position:position completion:nil];
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style completion:(void(^)(BOOL didTap))completion {
+- (void)makeToast:(NSAttributedString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSAttributedString *)title image:(UIImage *)image style:(CSToastStyle *)style completion:(void(^)(BOOL didTap))completion {
     UIView *toast = [self toastViewForMessage:message title:title image:image style:style];
     [self showToast:toast duration:duration position:position completion:completion];
 }
@@ -217,7 +217,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 
 #pragma mark - View Construction
 
-- (UIView *)toastViewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style {
+- (UIView *)toastViewForMessage:(NSAttributedString *)message title:(NSAttributedString *)title image:(UIImage *)image style:(CSToastStyle *)style {
     // sanity
     if (message == nil && title == nil && image == nil) return nil;
 
@@ -268,7 +268,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         titleLabel.textColor = style.titleColor;
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.alpha = 1.0;
-        titleLabel.text = title;
+        titleLabel.attributedText = title;
 
         // size the title label according to the length of the text
         CGSize maxSizeTitle = CGSizeMake((self.bounds.size.width * style.maxWidthPercentage) - imageRect.size.width, self.bounds.size.height * style.maxHeightPercentage);
@@ -287,7 +287,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         messageLabel.textColor = style.messageColor;
         messageLabel.backgroundColor = [UIColor clearColor];
         messageLabel.alpha = 1.0;
-        messageLabel.text = message;
+        messageLabel.attributedText = message;
 
         CGSize maxSizeMessage = CGSizeMake((self.bounds.size.width * style.maxWidthPercentage) - imageRect.size.width, self.bounds.size.height * style.maxHeightPercentage);
         CGSize expectedSizeMessage = [messageLabel sizeThatFits:maxSizeMessage];

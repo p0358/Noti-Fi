@@ -6,8 +6,16 @@
 	NFWindow *window = [NFWindow sharedInstance];
 	[window makeKeyAndVisible];
 
-	[[%c(NSDistributedNotificationCenter) defaultCenter] addObserverForName:@"com.rpgfarm.notifi" object:nil queue:nil usingBlock:^(NSNotification *notification) {
-		[window showToast:notification.userInfo[@"msg"]];
+	[[%c(NSDistributedNotificationCenter) defaultCenter] addObserverForName:@"net.p0358.noti-fi" object:nil queue:nil usingBlock:^(NSNotification *notification) {
+		NSMutableAttributedString *msg;
+
+		if ([notification.userInfo[@"connected"] boolValue]) {
+			msg = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Connected to Wi-Fi network %@", notification.userInfo[@"networkName"]]];
+			[msg addAttribute:NSForegroundColorAttributeName value:[UIColor cyanColor] range:NSMakeRange(strlen("Connected to Wi-Fi network "), ((NSString *)notification.userInfo[@"networkName"]).length)]; 
+		} else
+			msg = [[NSMutableAttributedString alloc] initWithString:@"Disconnected from Wi-Fi network"];
+
+		[window showToast:msg];
 	}];
 }
 %end
@@ -19,13 +27,19 @@
 %hook SBWiFiManager
 -(void)_primaryInterfaceChanged:(BOOL)arg1 {
 	%orig;
-	NSString *msg = @"";
 
-	if(arg1) msg = [NSString stringWithFormat:@"Connected to Wi-Fi network %@", [self currentNetworkName]];
-	else msg = @"Disconnected from Wi-Fi network";
+	NSDictionary *userInfo;
+	if (arg1) {
+		userInfo = @{
+			@"connected": @YES,
+			@"networkName": [self currentNetworkName],
+		};
+	} else {
+		userInfo = @{
+			@"connected": @NO,
+		};
+	}
 
-	[[%c(NSDistributedNotificationCenter) defaultCenter] postNotificationName:@"com.rpgfarm.notifi" object:nil userInfo:@{
-		@"msg": msg
-	}];
+	[[%c(NSDistributedNotificationCenter) defaultCenter] postNotificationName:@"net.p0358.noti-fi" object:nil userInfo:userInfo];
 }
 %end
